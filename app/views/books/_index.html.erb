@@ -17,16 +17,18 @@
         </td>
         <td><%= link_to book.title,book, class: "book_#{book.id}" %></td>
         <td><%= book.body %></td>
-        <td>
-          <% if book.favorited_by?(current_user) %>
-            <%= link_to book_favorites_path(book), method: :delete do%>
-            ❤<%= book.favorites.count %>いいね
-            <% end %>
-          <% else %>
-            <%= link_to book_favorites_path(book), method: :post do %>
-             ♡<%= book.favorites.count %>いいね
-            <% end %>
-          <% end %>
+        <td id="favorite_buttons_<%= book.id %>">
+          <!--以下、非同期化のため部分テンプレート化-->
+          <!--<#% if book.favorited_by?(current_user) %>-->
+          <!--  <#%= link_to book_favorites_path(book), method: :delete, remote: true do %>-->
+          <!--  ❤<#%= book.favorites.count %>いいね-->
+          <!--  <#% end %>-->
+          <!--<#% else %>-->
+          <!--  <#%= link_to book_favorites_path(book), method: :post, remote: true do %>-->
+          <!--   ♡<#%= book.favorites.count %>いいね-->
+          <!--  <#% end %>-->
+          <!--<#% end %>-->
+          <%= render "favorites/favorites", book: book %>
         </td>
         <td><%= link_to "コメント数：#{book.book_comments.count}", book_path(book.id) %></td>
       </tr>
